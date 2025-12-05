@@ -1,17 +1,17 @@
-import { Alert } from "bootstrap";
-import React, { useState } from "react";
 
+import React, { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 
 //create your first component
 const Home = () => {
 	const [tarea, setTarea] = useState('');
 	const [listaTareas, setListaTareas] = useState([]);
 
+	
 	const updateTarea = (prop) => {
 		if(prop.trim() === ''){
-			alert('No puedes poner tareas vacias')
 			setTarea('')
-			return
+			return toast('No puedes poner tareas vacias');
 		}
 		const newId = listaTareas.length + 1;
 		const newTarea = {
@@ -30,6 +30,7 @@ const Home = () => {
 	return (
 		<div className="container-fluid bg-dark">
 			<div className="d-flex flex-column justify-content-center align-items-center p-3 m-4 mt-0">
+				<ToastContainer />
 				<input
 					className="w-50"
 					type="text"
@@ -40,7 +41,7 @@ const Home = () => {
 					type="button"
 					className="btn btn-secondary w-50 p-1 m-3"
 					onClick={() => {
-						updateTarea(tarea.trim())
+						updateTarea(tarea)
 					}
 					}>
 					Add chore
