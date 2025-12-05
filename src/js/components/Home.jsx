@@ -1,3 +1,4 @@
+import { Alert } from "bootstrap";
 import React, { useState } from "react";
 
 
@@ -7,6 +8,11 @@ const Home = () => {
 	const [listaTareas, setListaTareas] = useState([]);
 
 	const updateTarea = (prop) => {
+		if(prop.trim() === ''){
+			alert('No puedes poner tareas vacias')
+			setTarea('')
+			return
+		}
 		const newId = listaTareas.length + 1;
 		const newTarea = {
 			id: newId,
@@ -34,7 +40,7 @@ const Home = () => {
 					type="button"
 					className="btn btn-secondary w-50 p-1 m-3"
 					onClick={() => {
-						updateTarea(tarea)
+						updateTarea(tarea.trim())
 					}
 					}>
 					Add chore
@@ -43,14 +49,21 @@ const Home = () => {
 
 			</div>
 			<div className="d-flex flex-column justify-content-center align-items-center p-3 m-4 mt-0">
+				{	listaTareas.length === 0 ? (
+						<div className="d-flex w-50 text-light bg-dark justify-content-between align-items-center m-1">
+							<span><strong>Aun no tienes ninguna tarea</strong></span>
+						</div>
 
+					) : null
+
+				}
 				{listaTareas.map(item => (
 
-					<div key={item.id} className="d-flex w-50 text-light bg-dark justify-content-between align-items-center m-1">
-						<span><strong>{item.chore}</strong></span>
+					<div key={`${item.id}-${item.chore}`} className="d-flex w-50 text-light bg-dark justify-content-between align-items-center m-1 boton">
+						<span className="p-2"><strong>{item.chore}</strong></span>
 						<button
 							type="button"
-							className="btn btn-light text-dark p-1 flex-end"
+							className="btn btn-light text-dark p-1 flex-end d-none"
 							onClick={()=>borrarTarea(item.id)}>
 							x
 						</button>
